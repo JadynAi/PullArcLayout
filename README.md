@@ -6,7 +6,8 @@
 ### 原理
 ### Path
  - rewind（）方法和reset（）方法的区别
-  > reset清除path上的内容，重置path到 path = new Path()的初始状态。<br>
+
+> reset清除path上的内容，重置path到 path = new Path()的初始状态。<br>
     rewind清除path上的内容，但会保留path上相关的数据结构，以高效的复用。
 
 ### 感谢以下开源项目：
