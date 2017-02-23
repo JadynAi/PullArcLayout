@@ -2,7 +2,8 @@
 ### 简介
  下拉可以随手指移动距离改变弧度的布局——ArcContainer
 #### 先看看效果吧
- ![看我看我看我](https://github.com/JadynAi/PullArcLayout/blob/master/app/GIF.gif)
+  ![](https://github.com/JadynAi/PullArcLayout/blob/master/app/GIF.gif)
+ 
 ### 思路如下
   这个效果的最初始是因为项目中的需求效果，写完之后觉得还不错。就把思路整理了一下，顺便记录一下自己的想法。
   
@@ -14,16 +15,39 @@
 
 #### 1.先把需要的对象创建出来，尤其注意Xfermode的模式选择
 ```
-porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+        porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.WHITE);
-       mClipPath = new Path();
+        mClipPath = new Path();
 ```
        
 #### 2.在onMeasure（）方法里，绘制Path路径
-   - 基本样子是介个样子的，如图中橘色线框起来的部分：<br>
-   ![路径如图](https://github.com/JadynAi/PullArcLayout/blob/master/app/20170223175153.png)
- 
+- 基本样子是介个样子的，如图中橘色线框起来的部分：<br>
+    ![](https://github.com/JadynAi/PullArcLayout/blob/master/app/20170223175153.png)
+- 在这里遇到一个不大不小的坑。因为弧形使用贝塞尔二阶曲线绘制的，但最开始的时候弧形的顶点总是短了那么一点点。让人很是费解，但其实贝塞尔的曲线是：![](http://img.blog.csdn.net/20141216155508803)
+> 也就是说弧顶的距离其实比参数设置里的距离是要短一些的，经过一些调试，最终在onMeasure是这样的：
+
+```
+@Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        width = getMeasuredWidth();
+        height = getMeasuredHeight();
+
+
+        if (firstGetHeight) {
+            orignalHeight = height;
+            firstGetHeight = false;
+        }
+        mClipPath.rewind();
+        mClipPath.moveTo(0, orignalHeight);
+        mClipPath.cubicTo(0, orignalHeight, width / 2, orignalHeight + 2.2f * (height - orignalHeight), width, orignalHeight);
+        mClipPath.lineTo(width, height);
+        mClipPath.lineTo(0, height);
+        mClipPath.close();
+    }
+```
   
 ### Path
  - rewind（）方法和reset（）方法的区别
