@@ -11,4 +11,3 @@
 
 ### 感谢以下开源项目：
  - [YListView](https://github.com/yll2wcf/YLListView)
- - 底部弧形的绘制参考这个项目[Crescento](https://github.com/developer-shivam/Crescento)
