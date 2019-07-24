@@ -2,7 +2,7 @@
 ### 简介
  下拉可以随手指移动距离改变弧度的布局——ArcContainer
 #### 先看看效果吧
-  ![](https://github.com/JadynAi/PullArcLayout/blob/master/app/GIF.gif)
+  ![](https://github.com/JadynAi/PullArcLayout/blob/master/app/GIF1.gif)
  
 ### 思路如下
   这个效果的最初始是因为项目中的需求效果，写完之后觉得还不错。就把思路整理了一下，顺便记录一下自己的想法。
